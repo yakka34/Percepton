@@ -32,6 +32,28 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.15.0</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>UTF-8</encoding>
+					<compilerArgs>
+						<arg>-XDcompilePolicy=simple</arg>
+						<arg>--should-stop=ifError=FLOW</arg>
+						<arg>-Xplugin:ErrorProne</arg>
+					</compilerArgs>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>com.google.errorprone</groupId>
+							<artifactId>error_prone_core</artifactId>
+							<version>2.50.0</version>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.5.6</version>
 			</plugin>

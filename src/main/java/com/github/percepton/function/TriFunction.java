@@ -6,7 +6,7 @@ import java.util.function.Function;
 @FunctionalInterface
 public interface TriFunction<T, U, V, R> {
 
-    R apply(T t, U u, V v);
+    R apply(final T t, final U u, final V v);
 
     default <K> TriFunction<T, U, V, K> andThen(final Function<? super R, ? extends K> after) {
         Objects.requireNonNull(after);

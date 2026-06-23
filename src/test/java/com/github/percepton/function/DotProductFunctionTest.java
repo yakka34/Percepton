@@ -21,6 +21,7 @@ public class DotProductFunctionTest {
         final float[] y = {};
 
         final float result = VectorOperations.DOT_PRODUCT.apply(x, y);
+
         assertEquals(0f, result, 0f);
     }
 
@@ -30,6 +31,7 @@ public class DotProductFunctionTest {
         final float[] y = {4f, 5f, 6f};
 
         final float result = VectorOperations.DOT_PRODUCT.apply(x, y);
+
         assertEquals(32f, result, 0f);
     }
 
