@@ -7,5 +7,6 @@ public class VectorOperations {
     }
 
     public static final DotProductFunction DOT_PRODUCT = new DotProductFunction();
+    public static final VectorAdditionFunction VECTOR_ADDITION = new VectorAdditionFunction();
 
 }
