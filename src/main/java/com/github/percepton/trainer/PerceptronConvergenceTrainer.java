@@ -43,6 +43,9 @@ public class PerceptronConvergenceTrainer {
     }
 
     public Optional<TrainingResult> train(final List<TrainingData> trainingData) {
+        if (trainingData.isEmpty()) {
+            return Optional.empty();
+        }
         final float[][] inputs = preprocessTrainingData(trainingData);
         float[] weights = inputs[0].clone();
         for (int epoch = 0, mistakes = 0; epoch < 100; epoch++) {

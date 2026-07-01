@@ -104,4 +104,11 @@ class PerceptronConvergenceTrainerTest {
         assertTrue(result.isEmpty());
     }
 
+    @Test
+    void shouldReturnEmptyForEmptyInput() {
+        final Optional<TrainingResult> result = new PerceptronConvergenceTrainer().train(List.of());
+
+        assertTrue(result.isEmpty());
+    }
+
 }
