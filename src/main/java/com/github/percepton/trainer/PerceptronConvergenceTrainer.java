@@ -2,6 +2,7 @@ package com.github.percepton.trainer;
 
 import com.github.percepton.data.Bias;
 import com.github.percepton.data.Bit;
+import com.github.percepton.data.FloatArray;
 import com.github.percepton.data.TrainingData;
 import com.github.percepton.data.TrainingResult;
 import com.github.percepton.function.VectorOperations;
@@ -20,7 +21,7 @@ public class PerceptronConvergenceTrainer {
     }
 
     private static float[] preprocessTrainingData(final TrainingData trainingData) {
-        final float[] augmentedInput = addBias(trainingData.input());
+        final float[] augmentedInput = addBias(trainingData.input().get());
         if (Bit.ZERO == trainingData.expectedOutput()) {
             return VectorOperations.VECTOR_NEGATE.apply(augmentedInput);
         }
@@ -39,7 +40,7 @@ public class PerceptronConvergenceTrainer {
     private TrainingResult mapTrainingResult(final float[] weights, final int epoch, final int mistakes) {
         final int biasIndex = weights.length - 1;
         final Bias bias = new Bias(weights[biasIndex]);
-        return new TrainingResult(Arrays.copyOf(weights, biasIndex), bias, epoch, mistakes);
+        return new TrainingResult(FloatArray.of(Arrays.copyOf(weights, biasIndex)), bias, epoch, mistakes);
     }
 
     public Optional<TrainingResult> train(final List<TrainingData> trainingData) {

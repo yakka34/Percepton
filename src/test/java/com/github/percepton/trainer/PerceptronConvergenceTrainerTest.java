@@ -1,6 +1,7 @@
 package com.github.percepton.trainer;
 
 import com.github.percepton.data.Bit;
+import com.github.percepton.data.FloatArray;
 import com.github.percepton.data.TrainingData;
 import com.github.percepton.data.TrainingResult;
 import com.github.percepton.function.PerceptronFunction;
@@ -17,7 +18,7 @@ class PerceptronConvergenceTrainerTest {
     private void assertTrainingResult(final TrainingResult trainingResult, final List<TrainingData> trainingDataList) {
         final PerceptronFunction perceptron = new PerceptronFunction();
         trainingDataList.forEach(trainingData -> {
-            final Bit output = perceptron.apply(trainingData.input(), trainingResult.weights(), trainingResult.bias());
+            final Bit output = perceptron.apply(trainingData.input().get(), trainingResult.weights().get(), trainingResult.bias());
             assertEquals(trainingData.expectedOutput(), output);
         });
     }
@@ -25,10 +26,10 @@ class PerceptronConvergenceTrainerTest {
     @Test
     void shouldConvergeOnAnd() {
         final List<TrainingData> and = List.of(
-                new TrainingData(new float[]{0f, 0f}, Bit.ZERO),
-                new TrainingData(new float[]{0f, 1f}, Bit.ZERO),
-                new TrainingData(new float[]{1f, 0f}, Bit.ZERO),
-                new TrainingData(new float[]{1f, 1f}, Bit.ONE));
+                new TrainingData(FloatArray.of(0f, 0f), Bit.ZERO),
+                new TrainingData(FloatArray.of(0f, 1f), Bit.ZERO),
+                new TrainingData(FloatArray.of(1f, 0f), Bit.ZERO),
+                new TrainingData(FloatArray.of(1f, 1f), Bit.ONE));
 
         final Optional<TrainingResult> result = new PerceptronConvergenceTrainer().train(and);
 
@@ -39,10 +40,10 @@ class PerceptronConvergenceTrainerTest {
     @Test
     public void shouldConvergeOnOr() {
         final List<TrainingData> or = List.of(
-                new TrainingData(new float[]{0f, 0f}, Bit.ZERO),
-                new TrainingData(new float[]{0f, 1f}, Bit.ONE),
-                new TrainingData(new float[]{1f, 0f}, Bit.ONE),
-                new TrainingData(new float[]{1f, 1f}, Bit.ONE));
+                new TrainingData(FloatArray.of(0f, 0f), Bit.ZERO),
+                new TrainingData(FloatArray.of(0f, 1f), Bit.ONE),
+                new TrainingData(FloatArray.of(1f, 0f), Bit.ONE),
+                new TrainingData(FloatArray.of(1f, 1f), Bit.ONE));
 
         final Optional<TrainingResult> result = new PerceptronConvergenceTrainer().train(or);
 
@@ -53,10 +54,10 @@ class PerceptronConvergenceTrainerTest {
     @Test
     public void shouldConvergeOnNand() {
         final List<TrainingData> nand = List.of(
-                new TrainingData(new float[]{0f, 0f}, Bit.ONE),
-                new TrainingData(new float[]{0f, 1f}, Bit.ONE),
-                new TrainingData(new float[]{1f, 0f}, Bit.ONE),
-                new TrainingData(new float[]{1f, 1f}, Bit.ZERO));
+                new TrainingData(FloatArray.of(0f, 0f), Bit.ONE),
+                new TrainingData(FloatArray.of(0f, 1f), Bit.ONE),
+                new TrainingData(FloatArray.of(1f, 0f), Bit.ONE),
+                new TrainingData(FloatArray.of(1f, 1f), Bit.ZERO));
 
         final Optional<TrainingResult> result = new PerceptronConvergenceTrainer().train(nand);
 
@@ -67,10 +68,10 @@ class PerceptronConvergenceTrainerTest {
     @Test
     public void shouldConvergeOnNor() {
         final List<TrainingData> nor = List.of(
-                new TrainingData(new float[]{0f, 0f}, Bit.ONE),
-                new TrainingData(new float[]{0f, 1f}, Bit.ZERO),
-                new TrainingData(new float[]{1f, 0f}, Bit.ZERO),
-                new TrainingData(new float[]{1f, 1f}, Bit.ZERO));
+                new TrainingData(FloatArray.of(0f, 0f), Bit.ONE),
+                new TrainingData(FloatArray.of(0f, 1f), Bit.ZERO),
+                new TrainingData(FloatArray.of(1f, 0f), Bit.ZERO),
+                new TrainingData(FloatArray.of(1f, 1f), Bit.ZERO));
 
         final Optional<TrainingResult> result = new PerceptronConvergenceTrainer().train(nor);
 
@@ -81,9 +82,9 @@ class PerceptronConvergenceTrainerTest {
     @Test
     public void shouldConvergeOnDataThatRequiresNonZeroThreshold() {
         final List<TrainingData> nonOrigin = List.of(
-                new TrainingData(new float[]{2f, 2f}, Bit.ONE),
-                new TrainingData(new float[]{0f, 0f}, Bit.ZERO),
-                new TrainingData(new float[]{3f, 1f}, Bit.ONE));
+                new TrainingData(FloatArray.of(2f, 2f), Bit.ONE),
+                new TrainingData(FloatArray.of(0f, 0f), Bit.ZERO),
+                new TrainingData(FloatArray.of(3f, 1f), Bit.ONE));
 
         final Optional<TrainingResult> result = new PerceptronConvergenceTrainer().train(nonOrigin);
 
@@ -94,10 +95,10 @@ class PerceptronConvergenceTrainerTest {
     @Test
     public void shouldNotConvergeOnXor() {
         final List<TrainingData> xor = List.of(
-                new TrainingData(new float[]{0f, 0f}, Bit.ZERO),
-                new TrainingData(new float[]{0f, 1f}, Bit.ONE),
-                new TrainingData(new float[]{1f, 0f}, Bit.ONE),
-                new TrainingData(new float[]{1f, 1f}, Bit.ZERO));
+                new TrainingData(FloatArray.of(0f, 0f), Bit.ZERO),
+                new TrainingData(FloatArray.of(0f, 1f), Bit.ONE),
+                new TrainingData(FloatArray.of(1f, 0f), Bit.ONE),
+                new TrainingData(FloatArray.of(1f, 1f), Bit.ZERO));
 
         final Optional<TrainingResult> result = new PerceptronConvergenceTrainer().train(xor);
 

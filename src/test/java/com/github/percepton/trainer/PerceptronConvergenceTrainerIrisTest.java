@@ -1,6 +1,7 @@
 package com.github.percepton.trainer;
 
 import com.github.percepton.data.Bit;
+import com.github.percepton.data.FloatArray;
 import com.github.percepton.data.TrainingData;
 import com.github.percepton.data.TrainingResult;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ class PerceptronConvergenceTrainerIrisTest {
                 Float.parseFloat(row[2]),
                 Float.parseFloat(row[3]),
         };
-        return new TrainingData(input, expectedIrisPlantClass.equals(row[4]) ? Bit.ONE : Bit.ZERO);
+        return new TrainingData(FloatArray.of(input), expectedIrisPlantClass.equals(row[4]) ? Bit.ONE : Bit.ZERO);
     }
 
     @Test
